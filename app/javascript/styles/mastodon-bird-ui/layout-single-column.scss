@@ -1,5 +1,5 @@
 /* Mastodon Bird UI by @rolle@mementomori.social
-   1.7.1-nightly */
+   1.7.3rc7-nightly */
 
 /* CSS variables */
 :root {
@@ -553,6 +553,11 @@ body.layout-single-column {
 /* Show minimal status card if there's no image */
 .layout-single-column .status-card .status-card__image:not(:has(img)) {
   display: none;
+}
+
+/* Show iframe in status card if status contains embedded media */
+.layout-single-column .status-card .status-card-video:has(iframe) {
+  display: inherit;
 }
 
 /* Hide empty status cards alltogether (Mastodon 4.1.5-2023-07-29) */
@@ -1333,7 +1338,38 @@ body.embed .detailed-status__display-avatar > img,
   color: var(--color-light-text);
 }
 
+/* Pill style tags */
+.layout-single-column .hashtag-bar a {
+  background-color: var(--color-dark);
+  border-radius: 9999px;
+  color: var(--color-light-purple);
+  display: inline-block;
+  font-size: var(--font-size-smaller);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.5;
+  margin: 0 4px 4px 0;
+  padding: 4px 8px;
+  text-decoration: none;
+}
+
+.layout-single-column .hashtag-bar .link-button {
+  font-size: var(--font-size-smaller);
+}
+
+.layout-single-column .hashtag-bar a:focus,
+.layout-single-column .hashtag-bar a:hover {
+  background-color: var(--color-accent-dark);
+  /* It should be always light also on light mode, so not using variable here */
+  color: #f7f9f9;
+}
+
+.layout-single-column .hashtag-bar a:focus span,
+.layout-single-column .hashtag-bar a:hover span {
+  text-decoration: none;
+}
+
 /* Status update tinted to right */
+.layout-single-column .status:not(.status--in-thread) .hashtag-bar,
 .layout-single-column .status__content--collapsed + .status__content__read-more-button,
 .layout-single-column .status:not(.status--in-thread) .status__action-bar,
 .layout-single-column .status:not(.status--in-thread) .attachment-list,
@@ -3072,6 +3108,8 @@ body.embed .button.logo-button:hover,
   /* Better blur overlay for ui-header */
   .layout-single-column .ui::after {
     backdrop-filter: blur(12px);
+    /* stylelint-disable-next-line */
+    -webkit-backface-visibility: hidden;
     background-color: var(--color-bg-75);
     content: '';
     /* Height is .ui__header + .tabs-bar__wrapper */
@@ -3308,6 +3346,19 @@ body.embed .button.logo-button:hover,
   /* Fix "About" page's server thumbnail margins */
   .about__header__hero {
     margin-top: 30px;
+  }
+}
+
+/* Add bottom padding to the navigation panel for the
+   Safari PWA on iPhones with the portrait mode home bar */
+@media screen and (device-width: 375px) and (device-height: 812px) and (min-resolution: 2dppx) and (orientation: portrait) and (display-mode: standalone), /* iPhone 12, iPhone 12 Pro, iPhone 13, iPhone 13 Pro, and iPhone 14 */ screen and (device-width: 390px) and (device-height: 844px) and (min-resolution: 3dppx) and (orientation: portrait) and (display-mode: standalone), /* iPhone 14 Pro */ screen and (device-width: 393px) and (device-height: 852px) and (min-resolution: 3dppx) and (orientation: portrait) and (display-mode: standalone), /* iPhone XR and iPhone 11 */ screen and (device-width: 414px) and (device-height: 896px) and (min-resolution: 2dppx) and (orientation: portrait) and (display-mode: standalone), /* iPhone Xs Max and iPhone 11 Pro Max */ screen and (device-width: 414px) and (device-height: 896px) and (min-resolution: 3dppx) and (orientation: portrait) and (display-mode: standalone), /* iPhone 12 Pro Max, iPhone 13 Pro Max, and iPhone 14 Plus */ screen and (device-width: 428px) and (device-height: 926px) and (min-resolution: 3dppx) and (orientation: portrait) and (display-mode: standalone), /* iPhone 14 Pro Max */ screen and (device-width: 430px) and (device-height: 932px) and (min-resolution: 3dppx) and (orientation: portrait) and (display-mode: standalone) {
+  .layout-single-column .columns-area__panels__pane--navigational .columns-area__panels__pane__inner {
+    padding-bottom: 26px;
+  }
+
+  /* Fix top header overlapping in /publish on iPhone */
+  .layout-single-column .columns-area--mobile:has(.compose-form) {
+    top: 34px;
   }
 }
 
