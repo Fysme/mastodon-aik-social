@@ -1731,8 +1731,11 @@ sv:
     does_not_match_previous_name: matchar inte det föregående namnet
   themes:
     contrast: Hög kontrast
-    default: Mastodon
     mastodon-light: Mastodon (ljust)
+    default: Mastodon Bird UI (Mörkt)
+    mastodon-bird-ui-light: Mastodon Bird UI (ljust)
+    mastodon-bird-ui-contrast: Mastodon Bird UI (Hög kontrast)
+    mastodon-dark: Mastodon (Mörkt)
   time:
     formats:
       default: "%d %b %Y, %H:%M"
